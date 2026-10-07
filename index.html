@@ -28,6 +28,7 @@
   <h3>About clinicians</h3>
   <ul>
     <li><strong>Google sign-in:</strong> your Google account email address, name and account ID, used only to confirm you are an invited clinician. We request only the basic sign-in scopes (openid, email, profile) and never see your Google password.</li>
+    <li><strong>Practice:</strong> the name of the practice (clinic) your account belongs to, used to organise accounts and billing and to hold that practice's encryption recovery key (section 6). Belonging to a practice does not give anyone access to your patient information.</li>
     <li><strong>Usage records:</strong> which feature was used, the AI model, amounts of text processed, minutes of audio transcribed, and cost — used for operating and billing the service. These records contain no patient information.</li>
     <li><strong>Issue reports</strong> you choose to send from Settings, emailed to us with optional technical details (extension version, browser, screen, connection status).</li>
   </ul>
@@ -51,9 +52,9 @@
     <tbody>
       <tr><td>Visit audio</td><td>Streamed from the browser to Deepgram for transcription</td><td>Never stored by TherapyNote</td></tr>
       <tr><td>Transcript, therapist notes, intake text</td><td>Kept on the recording computer. To draft a note, cleaned text is sent through our server to OpenAI</td><td>On that computer only (our server refuses to store them), removed on the clinician's schedule: 14 days after the note is filed by default</td></tr>
-      <tr><td>Drafted notes, patient name, visit date, cases, goals, existing note text from PracticePro</td><td>Our server on Amazon Web Services, so the clinician can see them on their other computers</td><td>Removed on the clinician's schedule: notes 180 days after filing, and a patient's records after 180 days with no visits, by default</td></tr>
+      <tr><td>Drafted notes, patient name, visit date, cases, goals, existing note text from PracticePro</td><td>Our server on Amazon Web Services, so the clinician can see them on their other computers. With end-to-end encryption on, they are encrypted on the clinician's computer first and our server stores only data it cannot read</td><td>Removed on the clinician's schedule: notes 180 days after filing, and a patient's records after 180 days with no visits, by default</td></tr>
       <tr><td>Condition terms (for example "ankle sprain")</td><td>Physiopedia, to find reference articles</td><td>Contains no patient information</td></tr>
-      <tr><td>Google account email and name</td><td>Google (sign-in) and our server</td><td>While the account exists</td></tr>
+      <tr><td>Google account email and name, practice name</td><td>Google (sign-in) and our server</td><td>While the account exists</td></tr>
     </tbody>
   </table>
 
@@ -70,6 +71,12 @@
   <ul>
     <li>All connections are encrypted (HTTPS/TLS), and stored data is encrypted at rest.</li>
     <li>Before text leaves the clinician's computer, email addresses, phone numbers, Social Security numbers, record and account numbers and street addresses are removed. The patient's name and calendar dates are replaced with placeholders that are filled back in on the computer, so the AI provider never receives them.</li>
+    <li><strong>Optional end-to-end encryption.</strong> A clinician can turn this on in Settings. Their notes, cases and templates are then encrypted on their own computer (AES-256) before they are uploaded, with a key that is created on that computer and never sent to us. Our server, and anyone with access to it, sees only encrypted data plus record IDs and timestamps. The clinician's other computers get the key by approval from a computer already set up, or with 12 recovery words that only the clinician holds.
+      <ul>
+        <li><strong>Practice recovery key:</strong> each practice can create its own recovery key, held offline by that practice's leadership. Our server keeps only its public half. If a clinician loses every computer and their recovery words, the practice and we together can restore that clinician's access; neither can do it alone, and one practice's key cannot unlock another practice's clinicians.</li>
+        <li>If the key, the recovery words and the practice recovery key are all lost, the encrypted data cannot be recovered by anyone, including us.</li>
+        <li>End-to-end encryption protects stored data. To draft a note, the cleaned text described below still passes through our server to OpenAI; it is processed in memory and not stored.</li>
+      </ul></li>
     <li>Access is invite-only. Sign-in sessions expire after 24 hours, and a removed clinician loses access within about a minute. Each clinician's data is kept separate from every other clinician's.</li>
     <li>Access to patient records on our server is logged by record ID, without note content. Server logs do not contain note text.</li>
     <li>Signing out, or a different clinician signing in on the same browser profile, removes patient information stored by the extension on that computer.</li>
