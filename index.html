@@ -14,7 +14,7 @@
   <nav><a href="./">Privacy policy</a><a href="support.html">Support</a></nav>
 
   <h1>Privacy Policy</h1>
-  <p class="meta">Effective October 4, 2026</p>
+  <p class="meta">Effective October 7, 2026</p>
 
   <div class="card">
     <p><strong>In short:</strong> TherapyNote is a Chrome extension that helps invited physical therapists draft visit notes. Visit audio is transcribed and never stored. Transcripts stay on the clinician's computer. Text needed to draft a note is sent to OpenAI with identifiers removed and the patient's name and dates replaced by placeholders. We do not sell data, show ads, track browsing, or let anyone train AI models on this information.</p>
@@ -50,8 +50,8 @@
     <thead><tr><th>Information</th><th>Where it goes</th><th>Kept</th></tr></thead>
     <tbody>
       <tr><td>Visit audio</td><td>Streamed from the browser to Deepgram for transcription</td><td>Never stored by TherapyNote</td></tr>
-      <tr><td>Transcript, therapist notes, intake text</td><td>Kept on the recording computer. To draft a note, cleaned text is sent through our server to OpenAI</td><td>On that computer only; our server refuses to store them</td></tr>
-      <tr><td>Drafted notes, patient name, visit date, cases, goals, existing note text from PracticePro</td><td>Our server on Amazon Web Services, so the clinician can see them on their other computers</td><td>Until the clinician deletes them</td></tr>
+      <tr><td>Transcript, therapist notes, intake text</td><td>Kept on the recording computer. To draft a note, cleaned text is sent through our server to OpenAI</td><td>On that computer only (our server refuses to store them), removed on the clinician's schedule: 14 days after the note is filed by default</td></tr>
+      <tr><td>Drafted notes, patient name, visit date, cases, goals, existing note text from PracticePro</td><td>Our server on Amazon Web Services, so the clinician can see them on their other computers</td><td>Removed on the clinician's schedule: notes 180 days after filing, and a patient's records after 180 days with no visits, by default</td></tr>
       <tr><td>Condition terms (for example "ankle sprain")</td><td>Physiopedia, to find reference articles</td><td>Contains no patient information</td></tr>
       <tr><td>Google account email and name</td><td>Google (sign-in) and our server</td><td>While the account exists</td></tr>
     </tbody>
@@ -78,8 +78,15 @@
 
   <h2>7. Retention and deletion</h2>
   <ul>
-    <li>Notes and cases are kept until the clinician deletes them. Nothing is deleted automatically, so unfinished work is never lost.</li>
-    <li>Transcripts, therapist notes and intake text stay on the recording computer until the visit is deleted or the clinician signs out.</li>
+    <li>PracticePro is the record; TherapyNote keeps working copies, and removes them automatically on a schedule each clinician sets in the extension:
+      <ul>
+        <li>transcripts, therapist notes and intake text: 7, 14 (default) or 30 days after the visit's note is filed;</li>
+        <li>drafted notes and documentation grades: 30, 90, 180 (default) or 365 days after filing, or kept;</li>
+        <li>everything for a patient with no visits for 90, 180 (default) or 365 days, or kept.</li>
+      </ul>
+      A note counts as filed once it has been filled into PracticePro or copied out. <strong>Visits whose note has not been filed are never removed automatically</strong>, so unfinished work is never lost.</li>
+    <li>Removal applies on all of the clinician's computers and in our cloud copy. Clinicians can also delete any visit at any time, and signing out removes patient information from that computer.</li>
+    <li>Each cleanup run is recorded in a log on the clinician's computer that contains counts only — no names, dates of service or content.</li>
     <li>Database backups allow recovery for up to 35 days, after which deleted data is no longer recoverable.</li>
     <li>To close an account and delete its data, email us at the address below. We confirm the request with the practice before deleting clinical records it may need to keep.</li>
   </ul>
